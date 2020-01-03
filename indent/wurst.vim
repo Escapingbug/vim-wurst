@@ -35,11 +35,16 @@ function! WurstIndent(lnum)
 
     let thisindent = previndent
 
-    if prevline =~ '\v(if|else)\s*'
+    " blocks
+    if prevline =~ '\v(if|else|init|function|switch|case|default|enum|while|for|class|construct|ondestroy|module|interface)\s*'
         let thisindent += s:sw()
     endif
 
-    if thisline =~ '\v(else)'
+    if prevline =~ '\v(\($)'
+        let thisindent += s:sw()
+    endif
+
+    if thisline =~ '\v(else|^\s*\))'
         let thisindent -= s:sw()
     endif
 
